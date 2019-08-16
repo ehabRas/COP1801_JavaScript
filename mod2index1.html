@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Three script blocks</title>
+</head>
+<body>
+  <h2>Variable creation and mathematical calculations</h2>
+  <p>This program has three scripts that will compute:<br>
+  1. the sum of two numbers<br>
+  2. the product of two numbers<br>
+  3. the result of tripling the sum of the two numbers</p>
+  <p>To illustrate that each scripting block is unique, new variable integer values are used in each calculation</p>
+  <p id="addn"></p>
+  <script type="text/javascript">
+    var num1 = 4;
+    var num2 = 37;
+    var sum = num1 + num2;
+    document.getElementById("addn").innerHTML = "The sum of "+ num1 + " and " + num2 + " is " + sum;
+  </script>
+  <p id="prod"></p>
+  <script type="text/javascript">
+    var num3 = 5;
+    var num4 = 48;
+    var product = num3 * num4;
+    document.getElementById("prod").innerHTML = "Multiplying " + num3 + " and " + num4 + " results in the product " + product;
+  </script>
+  <p id="trip"></p>
+  <script type="text/javascript">
+    var num5 = 6;
+    var num6 = 28;
+    var triple = (num5 + num6) * 3;
+    document.getElementById("trip").innerHTML = "Tripling the sum of " + num5 + " and " + num6 + " gives the result " + triple;
+  </script>
+</body>
+</html>

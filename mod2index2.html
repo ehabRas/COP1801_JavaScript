@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Single script for calculation</title>
+</head>
+<body>
+  <h2>Variable creation and mathematical calculations</h2>
+  <p>This program has a single script that will compute:<br>
+  1. the sum of two numbers<br>
+  2. the product of two numbers<br>
+  3. the result of tripling the sum of the two numbers</p>
+  <p id="addn"></p>
+  <p id="prod"></p>
+  <p id="trip"></p>
+  <script type="text/javascript">
+    var num1 = 4;
+    var num2 = 37;
+    var sum = num1 + num2;
+    document.getElementById("addn").innerHTML = "The sum of "+ num1 + " and " + num2 + " is " + sum;
+
+    var product = num1 * num2;
+    document.getElementById("prod").innerHTML = "Multiplying " + num1 + " and " + num2 + " results in the product " + product;
+
+    var triple = sum * 3;
+    document.getElementById("trip").innerHTML = "Tripling the sum of " + num1 + " and " + num2 + " gives the result " + triple;
+  </script>
+</body>
+</html>
