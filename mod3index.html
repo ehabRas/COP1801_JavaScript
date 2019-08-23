@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>String Reversals</title>
+    <style media="screen">
+      .answer {
+        border: 1px solid blue;
+        background: aliceblue;
+        padding: 5px;
+        width: 70%;
+      }
+
+      .col-wide {
+        float: left;
+        width: 60%;
+        padding: 10x;
+      }
+
+      .col-narrow {
+          float: left;
+          width: 30%;
+          margin-left: 10px;
+          padding-top: 50px;
+      }
+
+      .flex-container {
+      	display: flex;
+      	flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .flex-item {
+      	border: 1px solid black;
+      	width: 50%;
+      	margin-top: 10px;
+      }
+    </style>
+</head>
+<body>
+  <h2>String and number reversal function examples</h2>
+      <div class="col-wide">
+      <p>This page gives several examples of a function that will take a string and return the characters in reverse order.<br> It works for any alphanumeric combination.</p>
+      <p>Example 1&colon; This is a string reversed</p>
+      <p id="ex1" class="answer"></p>
+      <p>Example 2&colon; 563248</p>
+      <p id="ex2" class="answer"><i>in a blue box</i></p>
+      <p>Example 3&colon; There are 3 lemons</p>
+      <p id="ex3" class="answer"></p>
+      <p>Example 4&colon; racecar<br> It is a bit tricky to see that it worked on this one</p>
+      <p id="ex4" class="answer"></p>
+      <p>Example 5&colon; a nut for a jar of tuna</p>
+      <p id="ex5" class="answer"></p>
+    </div>
+    <div class="col-narrow">
+      <div class="flex-container">
+        <img src="lemon.jpg" alt="three lemons" class="flex-item">
+        <img src="racecar.jpg" alt="racecar" class="flex-item">
+        <img src="nuttuna.jpg" alt="nut and tuna" class="flex-item">
+      </div>
+    </div>
+
+
+  <script type="text/javascript">
+    //create a function to reverse the order of a string or number
+    //first, create array forward containing one character in each bin
+    //then reverse the order of the array into the backward array
+    //then join the reversed array characters into a String
+    //return the string to the function call
+
+    function strRev(swapString) {
+      var numChar = swapString.length;
+      var forward = [];
+      var backward = [];
+      var revString;
+
+      for (var i=0; i < numChar; i++) {
+        forward[i] = swapString.charAt(i);
+      }
+
+      backward = forward.reverse();
+      revString = backward.join("");
+      return revString;
+    }
+
+    //call the function for each example String
+    //then insert the answer in the appropriate page element
+    var phrase1 = strRev("This is a string reversed");
+      document.getElementById("ex1").innerHTML = "Answer&colon; " + phrase1;
+    var phrase2 = strRev("563248");
+      document.getElementById("ex2").innerHTML = "Answer&colon; " + phrase2;
+    var phrase3 = strRev("There are 3 lemons");
+      document.getElementById("ex3").innerHTML = "Answer&colon; " + phrase3;
+    var phrase4 = strRev("racecar");
+      document.getElementById("ex4").innerHTML = "Answer&colon; " + phrase4;
+    var phrase5 = strRev("a nut for a jar of tuna");
+      document.getElementById("ex5").innerHTML = "Answer&colon; " + phrase5;
+
+  </script>
+
+</body>
+
+</html>
