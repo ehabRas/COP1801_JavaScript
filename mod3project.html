@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <title>Text Echo Simulator</title>
+    <style media="screen">
+        label {
+          padding-left: 5px;
+          padding-bottom: 10px;
+        }
+
+        .col-one {
+          width: 50%;
+          float: left;
+        }
+        .col-two {
+          width: 35%;
+          float: left;
+          margin-left: 20px;
+          border: 1px dashed black;
+          border-radius: 25%;
+          padding: 20px 10px;
+          text-align: center;
+          background-color: white;
+        }
+    </style>
+
+</head>
+<body>
+<div data-role="page">
+    <h2>Text Echo Simulator</h2>
+    <p>Recreate the experience of standing on the precipice of a canyon, <br>exclaiming your profound message to the world, <br>and having it returned back to you.</p>
+
+    <div class="ui-field-contain">
+        <label for="textinput-1">Enter your message:</label>
+        <input type="text" name="textinput-1" id="textinput-1" placeholder="Text input" />
+    </div>
+    <div>
+      <p>Click to see what the canyon returns to you&colon;
+        <button class="ui-btn ui-btn-inline" onclick="displayMessage()">Create Echo</button>
+      </p>
+    </div>
+    <div>
+        <img src="echo.jpg" alt="echo canyon cartoon" class="col-one">
+        <p id="values" class="col-two"></p>
+    </div>
+
+    <script type="text/javascript">
+      const input = document.querySelector('input');
+      const log = document.getElementById('values');
+      var theInput;
+      log.classList.toggle("col-two");
+
+      //this is used to capture the event when the user clicks outside the box
+      input.addEventListener('change', updateValue);
+      //this assigns the text value in the input box to theInput variable
+      function updateValue(e) {
+        theInput = e.target.value;
+      }
+      //on button click, this function called to write theInput to the page
+      function displayMessage() {
+        log.classList.toggle("col-two");
+        log.innerHTML = theInput;
+      }
+    </script>
+
+</div>
+</body>
+
+<!--button is the html to designate a button, class pulls the formatting from the jQuery mobile library CDNs
+onClick is the event handler to execute the function, sample button is the text displayed in the button-->
+<!--<button class="ui-btn" onclick="displayMessage()">Sample Button</button>-->
+
+<!-- this is an input example that will write the input to the log in the values p tag. this writes input directly to the page as it happens
+    input.addEventListener('input', updateValue);
+    function updateValue(e) {
+    log.textContent = e.target.value;
+    }
+  -->
+
+</html>
