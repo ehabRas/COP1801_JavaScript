@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <title>Text Echo Simulator</title>
+    <style media="screen">
+        label {
+          padding-left: 5px;
+          padding-bottom: 10px;
+        }
+
+        .col-one {
+          width: 50%;
+          float: left;
+          margin-bottom: 20px;
+        }
+        .col-two {
+          width: 45%;
+          float: left;
+          margin-top: 20px;
+          margin-left: 20px;
+          border: 1px dashed black;
+          border-radius: 25%;
+          padding: 20px 10px;
+          text-align: center;
+          background-color: white;
+        }
+        .hide {
+          height: 0;
+          overflow: hidden;
+        }
+        .parrot img {
+          width:300px;
+        }
+    </style>
+
+</head>
+<body>
+<div data-role="page">
+    <h2>Text Echo Simulator</h2>
+    <p>Recreate the experience of standing on the precipice of a canyon, exclaiming your profound message to the world, and having it returned back to you</p>
+    <p>...or...</p>
+    <p>Train a parrot to mimic your every word</p>
+
+<!--this form is for radio buttons to choose canyon or parrot-->
+    <form>
+        <fieldset data-role="controlgroup" data-type="horizontal">
+            <legend>Choose one:</legend>
+            <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="canyon" onclick="onChangeRadio (this)">
+            <label for="radio-choice-h-2a">Echo Canyon</label>
+            <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="parrot" onclick="onChangeRadio (this)">
+            <label for="radio-choice-h-2b">Parrot</label>
+        </fieldset>
+    </form>
+<!--this input gets the text string to be returned to the user-->
+    <div class="ui-field-contain">
+        <label for="textinput-1">Enter your message:</label>
+        <input type="text" name="textinput-1" id="textinput-1" placeholder="Text input" />
+    </div>
+
+<!--this is just a test p to see if things from the script work-->
+    <p id="testMe"></p>
+
+<!--this is displayed and run if user selects canyon radio button-->
+    <div class="canyon hide">
+      <p>Click to see what the canyon returns to you&colon;
+        <button class="ui-btn ui-btn-inline" onclick="displayMessage1()">Create Echo</button>
+      </p>
+        <img src="echo.jpg" alt="echo canyon cartoon" class="col-one">
+        <p id="values1" class="col-two"></p>
+    </div>
+
+<!--this is displayed and run if user selects parrot radio button-->
+    <div class="parrot hide">
+      <p>Click to give Polly the Parrot a treat and see what she has to say&colon;
+        <button class="ui-btn ui-btn-inline" onclick="displayMessage2()">Give Polly a treat</button>
+      </p>
+        <img src="parrot.jpg" alt="parrot cartoon" class="col-one">
+        <p id="values2" class="col-two"></p>
+    </div>
+
+<!--this resets the form to try another message-->
+    <button class="ui-btn" onclick="resetMessage()">Try another message</button>
+
+    <script type="text/javascript">
+      const textInput = document.getElementById('textinput-1');
+      const buttonA = document.getElementById('radio-choice-h-2a');
+      const buttonB = document.getElementById('radio-choice-h-2b');
+      const canyonText = document.getElementById('values1');
+      const parrotText = document.getElementById('values2');
+      const canyonChoice = document.querySelector('div.canyon');
+      const parrotChoice = document.querySelector('div.parrot');
+      var theInput;
+      var buttonChoice;
+      //toggle off the formatting for the echo
+      canyonText.classList.toggle("col-two");
+      parrotText.classList.toggle("col-two");
+
+      //the onclick event was added to the radio buttons to call this function
+      //this function captures the value of the choice
+      function onChangeRadio(radio) {
+        console.log("the " + radio.value + " was selected");
+        buttonChoice = radio.value;
+        displayItem();
+      }
+      //this displays the choice of the user
+      function displayItem() {
+        if (buttonChoice == "parrot") {
+          parrotChoice.classList.remove("hide");
+          canyonChoice.classList.add("hide");
+        } else {
+          canyonChoice.classList.remove("hide");
+          parrotChoice.classList.add("hide");
+        }
+      }
+
+      //this is used to capture the text input event when the user clicks outside the box
+      textInput.addEventListener('change', updateValue);
+      //this assigns the text value in the input box to theInput variable
+      function updateValue(e) {
+        theInput = e.target.value;
+      }
+      //this will display a message to user if no text input entered
+      if (theInput == undefined) {
+        theInput = "No message was entered, click on the try another message button below to enter a new message";
+      }
+
+      //on button click, this function called to write theInput to the page
+      //toggles on the formatting for the echo
+      function displayMessage1() {
+        canyonText.classList.toggle("col-two");
+        canyonText.innerHTML = theInput;
+        //testing the buttonChoice variable
+        // document.getElementById('testMe').innerHTML = "You chose " + buttonChoice;
+      }
+      //on button click, this function called to write theInput to the page
+      //toggles on the formatting for the parrot response
+      function displayMessage2() {
+        parrotText.classList.toggle("col-two");
+        parrotText.innerHTML = theInput;
+        //testing the buttonChoice variable
+        // document.getElementById('testMe').innerHTML = "You chose " + buttonChoice;
+      }
+      //on button click, clears prior echo message and toggles class off
+      //need to update with an if button choice and reset values
+      function resetMessage() {
+        // clear and hide the response of the canyon or parrot
+        if (buttonChoice === "parrot") {
+          parrotText.classList.toggle("col-two");
+          parrotText.innerHTML = '';
+        } else {
+          canyonText.classList.toggle("col-two");
+          canyonText.innerHTML = '';
+        }
+        // reset the input text forn and input variable
+        textInput.value = '';
+        theInput = '';
+      }
+    </script>
+
+</div>
+</body>
+
+<!--button is the html to designate a button, class pulls the formatting from the jQuery mobile library CDNs
+onClick is the event handler to execute the function, sample button is the text displayed in the button-->
+<!--<button class="ui-btn" onclick="displayMessage()">Sample Button</button>-->
+
+<!-- this is an input example that will write the input to the log in the values p tag. this writes input directly to the page as it happens
+    input.addEventListener('input', updateValue);
+    function updateValue(e) {
+    log.textContent = e.target.value;
+    }
+  -->
+
+</html>

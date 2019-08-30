@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Fontdiner+Swanky|Unkempt&display=swap" rel="stylesheet">
+  <title>Sorter for Three Items</title>
+  <style media="screen">
+    header {
+      position: relative;
+      width: 100%;
+      min-height: 320px;
+    }
+    div img {
+      position: absolute;
+      top: 40px;
+      left: 20px;
+    }
+    div.col-two {
+      position: absolute;
+      top: 0;
+      left: 280px;
+      padding: 10px;
+      padding-right: 100px;
+      background-color: lightgray;
+    }
+    p {
+      line-height: 1.5;
+    }
+    h2 {
+      font-family: 'Fontdiner Swanky', cursive;
+    }
+    label {
+      font-family: 'Unkempt', cursive;
+      font-size: 1.5em;
+      margin-left: 15px;
+    }
+    form {
+      line-height: 2em;
+    }
+    .button {
+      width: 300px;
+      margin-left: 280px;
+      margin-top: 40px;
+      padding: 10px;
+      text-align: center;
+      border: 4px solid darkgray;
+      font-family: 'Fontdiner Swanky', cursive;
+      font-size: 1.2em;
+    }
+    p#results {
+      margin-top: 40px;
+      font-family: 'Fontdiner Swanky', cursive;
+      font-size: 1.2em;
+    }
+    .hide {
+      height: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="col-one">
+    <img src="hat.jpg" alt="hp-lexicon.org hat drawing without permission for academic use only">
+    </div>
+    <div class="col-two">
+      <h2>A sorter of sorts for strings and things</h2>
+      <p>This widget will take three words and return them in alphabetical order OR<br> three numbers and return them in numerical order. <br>Mixing numbers and letters will give some wonky results... <br>so proceed with that knowledge in hand.</p>
+      <p>Let the sorting begin!</p>
+    </div>
+  </header>
+  <section>
+    <!--add a input form for use to enter strings-->
+        <form class="form1">
+          <label for="textinput-1">String 1:</label>
+          <input type="text" id="textinput-1" placeholder="Enter a word or number">
+          <label for="textinput-2">String 2:</label>
+          <input type="text" id="textinput-2" placeholder="Enter a word or number">
+          <label for="textinput-3">String 3:</label>
+          <input type="text" id="textinput-3" placeholder="Enter a word or number">
+        </form>
+        <button class="button" onclick="sort()">SORT!</button>
+  </section>
+  <section>
+    <p id="results" class="hide">
+      <img src="cat.jpg" alt="quizzical black cat" align=left>
+      Hmmm... <br> There is a problem with your strings <br> please reload the page and enter again
+    </p>
+  </section>
+
+<script type="text/javascript">
+  var textInput1 = document.getElementById("textinput-1");
+  var text1;
+  var textInput2 = document.getElementById("textinput-2");
+  var text2;
+  var textInput3 = document.getElementById("textinput-3");
+  var text3;
+  var sortMe;
+
+//get the three input strings from the three boxes, each listener and event e needs its own number
+    //this is used to capture the text input event when the user clicks outside the box
+      textInput1.addEventListener('change', updateValue1);
+      //this assigns the text value in the input box to theInput variable
+      function updateValue1(e1) {
+        text1 = e1.target.value;
+        // console.log(text1);
+      }
+     textInput2.addEventListener('change', updateValue2);
+      //this assigns the text value in the input box to theInput variable
+      function updateValue2(e2) {
+        text2 = e2.target.value;
+        // console.log(text2);
+      }
+      //this is used to capture the text input event when the user clicks outside the box
+      textInput3.addEventListener('change', updateValue3);
+      //this assigns the text value in the input box to theInput variable
+      function updateValue3(e3) {
+        text3 = e3.target.value;
+        // console.log(text3);
+      }
+
+      function convertInput() {
+        var num1, num2, num3;
+        var inputGroup;
+        num1 = Number(text1);
+        num2 = Number(text2);
+        num3 = Number(text3);
+        // console.log("as numbers:" + num1,num2,num3);
+
+     //check if string is number or text and convert as needed
+          if (!isNaN(num1)) {
+            text1 = num1;
+          } else if (text1 == undefined) {
+            console.log("one is empty");
+          } else {
+            text1 = text1.toLowerCase();
+          }
+          if (!isNaN(num2)) {
+            text2 = num2;
+          } else if (text2 == undefined) {
+            console.log("two is empty");
+          } else {
+            text2 = text2.toLowerCase();
+          }
+          if (!isNaN(num3)) {
+            text3 = num3;
+          } else if (text3 == undefined) {
+            console.log("three is empty");
+          } else {
+            text3 = text3.toLowerCase();
+          }
+          // console.log("convert check " + text1, text2, text3);
+
+      //check if they are all the same type
+          if ( ( (isNaN(num1) && isNaN(num2)&& isNaN(num3))
+              && (text1 || text2 || text3 != undefined) ) ||
+            (!isNaN(num1) && !isNaN(num2)&& !isNaN(num3) ) ) {
+              inputGroup = [text1, text2, text3];
+              // console.log("input group check " + inputGroup );
+              return inputGroup;
+          } //end if all same type
+      } //end function
+
+        function sort() {
+        // sortMe = [text1, text2, text3];
+        sortMe = convertInput();
+        //use a truthy/falsey conditional to determine if array returned from the function
+        if (sortMe) {
+        var a, b;
+        var high, low;
+        //define variable arrayLength, subtract one as will add one in the loop index
+        var arrayLength = sortMe.length-1;
+        //create a while loop to repeat until all comparisons have been made
+        while (arrayLength > 0) {
+          //need to loop through the array for number of items
+          for (var i=0; i < arrayLength; i++) {
+            //need to sort through each element i and compare to next neighbor i+1
+            a = sortMe[i];
+            b = sortMe[i+1];
+              if (a > b) {
+              //then swap positions in the array from high index to low index
+                high = sortMe.indexOf(b);
+                low = sortMe.indexOf(a);
+                sortMe[high] = a;
+                sortMe[low] = b;
+                // console.log(sortMe);
+              }
+          }
+          //each time reduce the length to sort by one as the biggest should be
+          //at the end from the prior loop
+          arrayLength--;
+          // console.log(arrayLength);
+        }
+        //now that we have our array sorted, output the results to the page
+        var writeResults =  document.getElementById("results");
+        writeResults.innerHTML= "The sorting results <ul>";
+        for (var i=0; i < sortMe.length; i++) {
+          writeResults.innerHTML+= "<li>" + sortMe[i] + "</li>";
+        }
+        writeResults.innerHTML+= "</ul> <br> Reload the page to sort new strings!";
+        writeResults.removeAttribute("class", "hide");
+        } else {
+        document.getElementById("results").removeAttribute("class", "hide");
+      }
+    } //end function
+
+/*let's test this thing
+sortMe = ["banana", "kiwi", "grape", "apple"];
+sort(sortMe);
+seems to work so let's try to get it all together
+text1 = "5246";
+text2 = "5112";
+text3 = "5";
+sort(text1,text2,text3);
+*/
+
+</script>
+
+
+</body>
+
+</html>
