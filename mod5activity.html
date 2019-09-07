@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Address Form</title>
+  <style media="screen">
+    /* ----------page elements----------- */
+    body {
+      background: aliceblue;
+    }
+    /* ----------images----------- */
+    .topImg {
+      float: right;
+      width: 230px;
+      margin-left: 20px;
+      }
+    .btmImg {
+      float: right;
+    }
+    /* ---------form and fields--------- */
+    form {
+      line-height: 2em;
+    }
+    input {
+      width: 40%;
+    }
+    input#addr { margin-left: 18px;    }
+    input#city {  margin-left: 42px;    }
+    input#state {  margin-left: 37px;   }
+    input#zipcode { margin-left: 10px;   }
+
+    /* ----------button----------- */
+    .button {
+      margin: 20px 100px;
+      padding: 5px 15px;
+      font-size: 1.05em;
+    }
+
+    /* ----------JS output div----------- */
+    #results {
+      width: 30%;
+      margin-left: 75px;
+      background-color: palegoldenrod;
+    }
+    div > p {
+      font-size: 1.05em;
+      text-decoration: underline;
+      padding: 10px 0px 0px 20px;
+    }
+    .hide {
+      height: 0;
+      overflow: hidden;
+    }
+    .ticket {
+      margin-left: 35px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+      <h2>Getting the details...yours and ours</h2>
+      <img class="topImg" src="bike1.jpg" alt="wooded biking trail">
+      <p>Thank you for your interest in Kenny's Bike Adventures. Please enter your contact information below and we will send you the 2020 destination guide detailing all the upcoming excursions to biking trails around the U.S. We hope you will join us on an upcoming adventure! </p>
+  </header>
+  <section>
+    <!--add an input form for user to enter strings-->
+        <form id="form1" action="">
+          <p><label for="fname">First Name:</label> <input type="text" id="fname" placeholder="Enter first name"> </p>
+          <p><label for="lname">Last Name:</label> <input type="text" id="lname" placeholder="Enter last name"> </p>
+          <p><label for="addr">Address:</label> <input type="text" id="addr" placeholder="Enter street address"> </p>
+          <p><label for="city">City: </label><input type="text" id="city" placeholder="Enter city or town"> </p>
+          <p><label for="state">State: </label><input type="text" id="state" placeholder="Enter state"> </p>
+          <p><label for="zipcode">Zip Code:</label> <input type="text" id="zipcode" placeholder="Enter zip code"></p>
+        </form>
+        <button class="button" onclick="collect()">Submit</button>
+  </section>
+
+
+<script type="text/javascript">
+// this is a function to collect the input values of the form fields
+        function collect() {
+            var inputs = document.getElementById("form1").elements;
+            // console.log(inputs);
+            for (i=0; i<inputs.length; i++) {
+              // show the values
+              console.log(inputs[i].id +" is "+ inputs[i].value);
+              if (inputs[i].value === "") {
+                console.log(inputs[i].id + " is empty");
+                inputs[i].setAttribute("style", "border: 2px solid red");
+                  // add a red box to the empty field
+              } //end if all filled
+              else {
+                // this takes off the red border when missing field is filled with data value
+                inputs[i].removeAttribute("style", "border: 2px solid red");
+              } //end else
+            }// end for
+          } //end function
+
+</script>
+
+</body>
+
+</html>
