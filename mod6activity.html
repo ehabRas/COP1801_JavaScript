@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flooring Cost Estimator</title>
+  <style media="screen">
+
+  /*-----body styles ----------------------------------*/
+    body {
+      width: 100vw;
+      height: 100vh;
+  	  background: linear-gradient(rgba(243, 243, 243, 0.8), rgba(243, 243, 243, 0.4)),
+  		  url(blueprint.jpg) no-repeat ;
+  	  background-position: bottom right;
+  	    /*background-color:  #8f8384;*/
+    }
+
+
+  /*-------styles for the results div ----------------*/
+    .hide {
+      height: 0;
+      overflow: hidden;
+    }
+
+    div {
+      margin: 20px;
+      font-size: 1.1em;
+    }
+
+    .foot {
+      width: 50vw;
+    }
+
+  /* -------styling for the radio buttons ------------
+    -------------------------------------------------------- */
+    input[type="radio"] {
+    /* hide the radio button feature */
+    opacity: 0;
+    width: 0;
+    margin: 0;
+    }
+    /* here we will make the label look like the button selector */
+    input[type="radio"] + label {
+    border: 2px solid #138d75;
+    margin: 10px;
+    border-radius: 7px;
+    /* the width and padding doesn't work alone because the labels are displayed in-line, so you need to change it to display inline block  */
+    display: inline-block;
+    padding: 10px;
+    width: 5em;
+    height: 2em;
+    text-align: center;
+    }
+    /* actually add the image to the label as background */
+    input[id="tile"] + label {
+    background: url(tile2.jpg) left center no-repeat;
+    background-size: 10em 10em;
+    /* this moves the text to the right of the image */
+    padding-left: 10.5em;
+    padding-top: 1.5em;
+    }
+    input[id="wood"] + label {
+    background: url(wood.jpg) left center no-repeat;
+    background-size: 10em 10em;
+    /* this moves the text to the right of the image */
+    padding-left: 10.5em;
+    padding-top: 1.5em;
+    }
+    input[id="carpet"] + label {
+    background: url(carpet.jpg) left center no-repeat;
+    background-size: 10em 10em;
+    /* this moves the text to the right of the image */
+    padding-left: 10.5em;
+    padding-top: 1.5em;
+    }
+    /* change the border and font style when it is selected or clicked */
+    input[type="radio"]:checked + label {
+    border-color: #a93226;
+    border-width: 4px;
+    font-weight: bold;
+    }
+
+    .button {
+      font-size: 1.1em;
+      padding: 5px;
+      background-color: lightgreen;
+      margin-left: 25px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+      <h2>Flooring Cost Estimator</h2>
+      <p>Looking to update one or more rooms in your home?</p>
+      <p>Use our cost estimator to determine an approximate cost for flooring materials.<br> An average cost for each flooring type is used to generate the materials cost.</p>
+      <p>Measure your room and enter the length and width in inches below. Convert any fractions to decimals, as shown in the example values.</p>
+  </header>
+  <section>
+    <!--add an input form for user to enter strings-->
+        <form id="form1" action="">
+          <p><label for="floorWidth">Room Width (inches):</label> <input type="text" id="floorWidth" placeholder="example: 56.25"> </p>
+          <p><label for="floorLength">Room Length (inches):</label> <input type="text" id="floorLength" placeholder="example: 85.75"> </p>
+          <!-- <p><input type="color" id="colorBox" > </p> -->
+
+          <fieldset>
+          			<legend>Choose a flooring type</legend>
+                <!-- all radios need the same name to know they belong together in a set -->
+          			<input id="tile" name="flooring" type="radio" value="16" onclick="onChangeRadio (this)">
+          			<label for="tile">tile</label>
+
+          			<input id="wood" name="flooring" type="radio" value="4" onclick="onChangeRadio (this)">
+          			<label for="wood">wood</label>
+
+          			<input id="carpet" name="flooring" type="radio" value="2" onclick="onChangeRadio (this)">
+          			<label for="carpet">carpet</label>
+          		</fieldset><br>
+
+        </form>
+        <button class="button" onclick="doTheMath()">Calculate Flooring Cost</button>
+  </section>
+  <section>
+    <div id="results" class="hide">
+      <p>Maybe something about flooring or calculate a price total?</p>
+    </div>
+    <p class="foot">Set up an appointment with one of our installation experts to choose the exact color and style of your new flooring and any installation needs.</p>
+  </section>
+
+  <script type="text/javascript">
+    var buttonChoice;
+    var price;
+
+  //the onclick event was added to the radio buttons to call this function
+  //this function captures the attributes of the choice
+  function onChangeRadio(radio) {
+    console.log("the " + radio.id + " was selected with a cost of "+ radio.value);
+    buttonChoice = radio.id;
+    price = radio.value;
+    }
+
+    // calculates the cost estimate of the chosen flooring
+  function doTheMath() {
+      var inputs = document.getElementById("form1").elements;
+      // console.log(inputs);
+      for (i=0; i<inputs.length; i++) {
+        // show the values
+        console.log(inputs[i].id +" is "+ inputs[i].value);
+        if (inputs[i].value === "") {
+          console.log(inputs[i].id + " is empty");
+          inputs[i].setAttribute("style", "border: 2px solid red");
+            // add a red box to the empty field
+        } //end if all filled
+        else {
+          // this takes off the red border when missing field is filled with data value
+          inputs[i].removeAttribute("style", "border: 2px solid red");
+        } //end else
+      }// end for
+      // giving the input a name or id attribute will create an element property
+      // convert to number type and divide by 12 to get feet from inches
+      var widthInches = inputs.floorWidth.value;
+      var lengthInches = inputs.floorLength.value;
+
+      // calculate the cost per Square foot using the price per square foot
+      var sqFeet = (Number(widthInches)/12) * (Number(lengthInches)/12);
+      var costEst = sqFeet  * price;
+
+      var writeResults =  document.getElementById("results");
+      // check that all information is available
+      if (widthInches && lengthInches && price !== undefined) {
+        //now that we have our inputs, output the results to a page table
+        // use the toFixed method to return in standard dollars and cents format
+        writeResults.innerHTML= "<p>Room size&colon; " + sqFeet.toFixed(1) + " sqft</p><p>Estimated flooring cost for " + buttonChoice + " is $" + costEst.toFixed(2) + "</p>";
+      } else {
+        writeResults.innerHTML = "Missing information and unable to process form, please complete all fields and submit again";
+        // reset the inputs from the form
+        inputs = "";
+
+      } //end else
+      writeResults.removeAttribute("class", "hide");
+
+    } //end function
+  </script>
+
+</body>
+</html>
